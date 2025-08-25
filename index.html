@@ -1,0 +1,362 @@
+Fsociety, [8/25/25 6:47 PM]
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS4 Security Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff3838;
+        }
+        
+        .warning h2 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff3838 100%);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #00b894 0%, #00a382 100%);
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+        }
+        
+        .log-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        
+        .success { color: #00b894; background: rgba(0, 184, 148, 0.1); }
+        .error { color: #ff6b6b; background: rgba(255, 107, 107, 0.1); }
+        .warning { color: #feca57; background: rgba(254, 202, 87, 0.1); }
+        .info { color: #00d4ff; background: rgba(0, 212, 255, 0.1); }
+        
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+Fsociety, [8/25/25 6:47 PM]
+.progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff 0%, #0099ff 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .firmware-info {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 PS4 Security Analyzer</h1>
+            <p>Комплексный тест безопасности прошивки PlayStation 4</p>
+        </div>
+
+        <div class="warning">
+            <h2>⚠️ ВНИМАНИЕ: ОПАСНЫЙ ТЕСТ</h2>
+            <p>Этот тест пытается обнаружить уязвимости в системе. Возможны:</p>
+            <ul>
+                <li>Зависания браузера и системы</li>
+                <li>Потеря данных сессии</li>
+                <li>Нестабильная работа консоли</li>
+            </ul>
+            <p>Используйте на свой страх и риск!</p>
+        </div>
+
+        <div class="firmware-info">
+            <h3>Информация о системе:</h3>
+            <p id="firmwareVersion">Определение версии...</p>
+            <p id="browserInfo">Анализ браузера...</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🛡️ Тесты безопасности:</h3>
+            
+            <div class="test-card">
+                <h4>Тест 1: Проверка памяти (ArrayBuffer)</h4>
+                <p>Тестирование обработки операций с памятью</p>
+                <button class="btn" onclick="runMemoryTest()">Запустить тест</button>
+                <div class="progress-bar">
+                    <div class="progress" id="progress1"></div>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <h4>Тест 2: Проверка JavaScript引擎</h4>
+                <p>Тестирование уязвимостей в обработке JavaScript</p>
+                <button class="btn" onclick="runJSTest()">Запустить тест</button>
+                <div class="progress-bar">
+                    <div class="progress" id="progress2"></div>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <h4>Тест 3: Нагрузочное тестирование</h4>
+                <p>Проверка стабильности под нагрузкой</p>
+                <button class="btn btn-danger" onclick="runStressTest()">ОПАСНЫЙ ТЕСТ</button>
+                <div class="progress-bar">
+                    <div class="progress" id="progress3"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Результаты тестирования:</h3>
+            <button class="btn btn-success" onclick="runAllTests()">Запустить все тесты</button>
+            <button class="btn" onclick="clearLog()">Очистить лог</button>
+            
+            <div class="log-container" id="log">
+                <div class="log-entry info">Готов к тестированию. Выберите тест для запуска.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const logElement = document.getElementById('log');
+        let logData = [];
+
+        // Определение информации о системе
+        function detectSystemInfo() {
+            const userAgent = navigator.userAgent;
+            document.getElementById('firmwareVersion').textContent = User Agent: ${userAgent};
+            
+            // Попытка определить прошивку
+            const firmwareMatch = userAgent.match(/PlayStation 4; (\d+\.\d+)/);
+            if (firmwareMatch) {
+                document.getElementById('browserInfo').textContent = Версия прошивки: ${firmwareMatch[1]};
+            }
+        }
+
+        // Логирование
+        function log(message, type = 'info') {
+            const entry = document.createElement('div');
+
+Fsociety, [8/25/25 6:47 PM]
+entry.className = log-entry ${type};
+            entry.textContent = [${new Date().toLocaleTimeString()}] ${message};
+            logElement.appendChild(entry);
+            logElement.scrollTop = logElement.scrollHeight;
+            logData.push({message, type, time: new Date()});
+        }
+
+        // Очистка лога
+        function clearLog() {
+            logElement.innerHTML = '';
+            logData = [];
+            log('Лог очищен.', 'info');
+        }
+
+        // Тест 1: Проверка памяти
+        async function runMemoryTest() {
+            log('Запуск теста памяти...', 'info');
+            const progress = document.getElementById('progress1');
+            progress.style.width = '0%';
+            
+            try {
+                let buffers = [];
+                for (let i = 0; i < 1000; i++) {
+                    const ab = new ArrayBuffer(1024);
+                    const view = new Uint32Array(ab);
+                    for (let j = 0; j < view.length; j++) {
+                        view[j] = 0xdeadbeef;
+                    }
+                    buffers.push(view);
+                    
+                    progress.style.width = ${(i / 10)}%;
+                    if (i % 100 === 0) await delay(10);
+                }
+                progress.style.width = '100%';
+                log('Тест памяти пройден успешно.', 'success');
+            } catch (e) {
+                progress.style.width = '100%';
+                log(Ошибка в тесте памяти: ${e.message}, 'error');
+            }
+        }
+
+        // Тест 2: Проверка JavaScript
+        async function runJSTest() {
+            log('Запуск теста JavaScript...', 'info');
+            const progress = document.getElementById('progress2');
+            progress.style.width = '0%';
+            
+            try {
+                // Тест различных JS-операций
+                const tests = [
+                    () => { const arr = []; arr.length = -1; },
+                    () => { const obj = {}; Object.setPrototypeOf(obj, null); },
+                    () => { new Array(1000000).fill('test'); }
+                ];
+                
+                for (let i = 0; i < tests.length; i++) {
+                    tests[i]();
+                    progress.style.width = ${((i + 1) / tests.length) * 100}%;
+                    await delay(500);
+                }
+                
+                log('Тест JavaScript пройден успешно.', 'success');
+            } catch (e) {
+                progress.style.width = '100%';
+                log(Ошибка в тесте JavaScript: ${e.message}, 'error');
+            }
+        }
+
+        // Тест 3: Нагрузочное тестирование (опасный)
+        async function runStressTest() {
+            log('ЗАПУСК ОПАСНОГО ТЕСТА...', 'warning');
+            const progress = document.getElementById('progress3');
+            progress.style.width = '0%';
+            
+            try {
+                log('Создание нагрузки на систему...', 'warning');
+                const objects = [];
+                
+                for (let i = 0; i < 50000; i++) {
+                    const obj = {
+                        data: new Array(100).fill('stress_test'),
+                        timestamp: Date.now()
+                    };
+                    objects.push(obj);
+                    
+                    progress.style.width = ${(i / 500)}%;
+                    if (i % 1000 === 0) await delay(1);
+                }
+                
+                progress.style.width = '100%';
+                log('Нагрузочный тест завершен.', 'success');
+                log(Создано объектов: ${objects.length}, 'info');
+                
+            } catch (e) {
+                progress.style.width = '100%';
+                log(СИСТЕМНАЯ ОШИБКА: ${e.message}, 'error');
+            }
+        }
+
+Fsociety, [8/25/25 6:47 PM]
+// Запуск всех тестов
+        async function runAllTests() {
+            log('=== ЗАПУСК ВСЕХ ТЕСТОВ ===', 'info');
+            await runMemoryTest();
+            await delay(1000);
+            await runJSTest();
+            await delay(1000);
+            await runStressTest();
+            log('=== ВСЕ ТЕСТЫ ЗАВЕРШЕНЫ ===', 'info');
+        }
+
+        // Вспомогательные функции
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Инициализация
+        window.onload = function() {
+            detectSystemInfo();
+            log('Система инициализирована. Готов к тестированию.', 'info');
+            log(User Agent: ${navigator.userAgent}, 'info');
+        }
+    </script>
+</body>
+</html>
